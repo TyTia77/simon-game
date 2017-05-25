@@ -68,7 +68,6 @@ var app = angular.module('app', []);
             }
         }
 
-        // functions
         function checkPattern(){
             var match = true;
 
@@ -122,10 +121,8 @@ var app = angular.module('app', []);
             if (pattern.length < 3){
                 return 1500;
             } else if (pattern.length < 6){
-                // return 1000;
                 return 1000;
             } else if (pattern.length < 9){
-                // return 700;
                 return 700;
             } else {
                 return 400;
