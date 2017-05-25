@@ -51,6 +51,12 @@ var app = angular.module('app', []);
         $('.tab').on('click', function(){
             var index;
             if (gameState.allowClick){
+
+                if (gameState.timeout.playerTimelimit){
+                    $timeout.cancel(gameState.timeout.playerTimelimit);
+                    gameState.timeout.playerTimelimit = false;
+                }
+
                 index = $(this).index();
                 toggleClass(index);
                 gameState.userRecord.push(index);
@@ -71,8 +77,11 @@ var app = angular.module('app', []);
             var userLen = user.length - 1;
             var patternLen = pattern.length - 1;
 
-            if (user[userLen] === pattern[userLen]){
+            // checks each individual key pressed
+            if (user[userLen] === pattern[userLen] && userLen !== -1){
 
+                // successfully entered
+                // all correct values
                 if (userLen === patternLen){
 
                     // player achieved 20 correct
@@ -82,30 +91,63 @@ var app = angular.module('app', []);
                             $scope.buttonTap.start();
                         }, 3000);
                     } else {
+
+                        // continue to next sequence
                         gameState.userRecord = [];
                         $scope.display++;
                         generatePattern();
                         playPattern(0);
                     }
+
+                // successfully entered however
+                // not all keys
+                } else {
+
+                    // handle error when user takes too long
+                    // to respond
+                    if (gameState.timeout.playerTimelimit){
+                        handleError();
+                    } else {
+
+                        // set timer if there isnt one active
+                        setPlayerTimeout();
+                    }
                 }
 
             }  else {
-                // store a copy then reapply after
-                // displaying error
-                var display = $scope.display;
-                $scope.display = ' er';
 
-                $timeout(function(){
-                    if (gameState.strictMode){
-                        $scope.buttonTap.start();
-                    } else {
-                        $scope.display = display;
-                        gameState.userRecord = [];
-                        playPattern(0);
-                    }
-                }, 1000);
+                // incorrect input
+                handleError();
             }
 
+        }
+
+        function handleError(){
+            if (gameState.timeout.playerTimelimit){
+                $timeout.cancel(gameState.timeout.playerTimelimit);
+            }
+
+            // store a copy then reapply after
+            // displaying error
+            var display = $scope.display;
+            $scope.display = ' er';
+
+            gameState.timeout.error = $timeout(function(){
+                if (gameState.strictMode){
+                    $scope.buttonTap.start();
+                } else {
+                    $scope.display = display;
+                    gameState.userRecord = [];
+                    playPattern(0);
+                }
+            }, 1000);
+        }
+
+
+        function setPlayerTimeout(){
+            gameState.timeout.playerTimelimit = $timeout(function(){
+                checkPattern();
+            }, 3000);
         }
 
         function restartGame(){
@@ -131,7 +173,12 @@ var app = angular.module('app', []);
                 gameState.timeout.playPattern = $timeout(function(){
                     toggleClass(gameState.pattern[index]);
                     playPattern(index+1);
-                    gameState.allowClick = index === gameState.pattern.length-1 ? true : false;
+
+                    if (index === gameState.pattern.length - 1){
+                        gameState.allowClick = true;
+                        setPlayerTimeout();
+                    }
+
                 }, timer);
             }
         }
