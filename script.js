@@ -127,6 +127,8 @@ var app = angular.module('app', []);
                 $timeout.cancel(gameState.timeout.playerTimelimit);
             }
 
+            gameState.allowClick = false;
+
             // store a copy then reapply after
             // displaying error
             var display = $scope.display;

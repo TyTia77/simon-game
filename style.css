@@ -136,7 +136,6 @@ body{
     margin-top: 5px;
 }
 
-
 .switch{
     position: relative;
     background-color: white;
@@ -148,8 +147,6 @@ body{
 }
 
 .fa{
-    color: #3A73EF;
-    color: green;
     color: grey;
     top: 4px;
 }
@@ -162,39 +159,9 @@ body{
     background-color: #00FF06;
 }
 
-
 .button-container:hover{
     cursor: pointer;
 }
-
-/*.button-container:hover::after{
-    content: attr(data-msg);
-    transition-duration: .2s;
-    display: block;
-    position: absolute;
-    color: white;
-    text-align: center;
-    left: 130%;
-    width: 60px;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    background-color: rgba(0,0,0,.8);
-}
-
-.button-container:hover::before{
-    content: '';
-    display: block;
-    position: absolute;
-    color: white;
-    left: 108%;
-    top: 30%;
-    height: 0;
-    width: 0;
-    border-top: 10px solid transparent;
-    border-right: 10px solid rgba(0,0,0,.8);
-    border-bottom: 10px solid transparent;
-}*/
 
 .button-text{
     color: white;
@@ -226,6 +193,11 @@ body{
 .tab:hover{
     cursor: pointer;
 }
+
+.tab:focus{
+    outline: none;
+}
+
 .tab:nth-child(1){
     background-color: #00A74A;
     margin-right: 10px;
