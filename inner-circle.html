@@ -4,16 +4,16 @@
 </div>
 
 <div class="start-button-container">
-    <div class="start-button"></div>
+    <div class="start-button" ng-click="buttonTap.start()"></div>
     <label>start</label>
 </div>
 <div class="strict-button-container">
     <div class="strict-led"></div>
-    <div class="strict-button"></div>
+    <div class="strict-button" ng-click="buttonTap.strict()"></div>
     <label>strict</label>
 </div>
 
-<div class="button-container" ng-click="buttonClick()" data-msg="click to begin">
+<div class="button-container" ng-click="buttonTap.on()">
     <!-- <span class="switch">&nbsp;</span> -->
     <i class="fa fa-power-off fa-2x" aria-hidden="true"></i>
 </div>
