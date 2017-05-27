@@ -208,9 +208,10 @@ var app = angular.module('app', []);
             var dom = $('.tab').eq(index);
             var color = $('.tab').eq(index).attr('data-color');
             var audio = new Audio(wav[index]);
-            var timer = getTimerValue() / 2;
-            audio.autoLoad = true;
+            audio.load();
+            //audio.autoLoad = true;
             audio.play();
+            var timer = getTimerValue() / 2;
             dom.addClass(color);
 
             $timeout(function(){
