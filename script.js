@@ -207,9 +207,11 @@ var app = angular.module('app', []);
         function toggleClass(index){
             var dom = $('.tab').eq(index);
             var color = $('.tab').eq(index).attr('data-color');
+
+            // TODO sound delay issues on safari and mobile
+            // currently no fix
             var audio = new Audio(wav[index]);
             audio.load();
-            //audio.autoLoad = true;
             audio.play();
             var timer = getTimerValue() / 2;
             dom.addClass(color);
